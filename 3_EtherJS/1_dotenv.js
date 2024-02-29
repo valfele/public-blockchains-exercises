@@ -1,5 +1,6 @@
 // Loading path module for operations with file paths.
 const path = require('path');
+require('dotenv').config();
 
 function exit() {
     console.log('Exercise ' + exercise + ' completed.');
@@ -9,6 +10,8 @@ function exit() {
 
 // Exercise 1: Loading the .env file correctly.
 ///////////////////////////////////////////////
+
+exercise = 1;
 
 // The dotenv package is sensitive to the execution modes.
 // The execution mode sets the "current working directory", which by default
@@ -24,6 +27,8 @@ function exit() {
 
 let pathToDotEnv = path.resolve(process.cwd(), '.env');
 console.log(pathToDotEnv);
+
+// process.exit(0);
 
 // Checkpoint. Does the value of the terminal depend 
 // on the directory of execution?
@@ -50,7 +55,7 @@ console.log(pathToDotEnv);
 
 // Your code here.
 
-
+// exit();
 
 
 // Exercise 2. Create and fill in .env file.
@@ -94,6 +99,13 @@ exercise = '3a';
 
 // Your code here!
 
+console.log(process.env.METAMASK_1_ADDRESS);
+
+let privateKey = process.env.METAMASK_1_PRIVATE_KEY;
+if (privateKey === "") {
+    console.log('Missing private key, fix your .env file');
+}
+
 // exit();
 
 // b. Create an array with all the names of the variables written in the .env
@@ -102,7 +114,14 @@ exercise = '3a';
 
 exercise = '3b';
 
-// Your code here!
+variables = [
+    'INFURA_KEY', 'INFURA_GOERLI_API_URL', 'INFURA_MAINNET_API_URL',
+    'ALCHEMY_KEY', 'ALCHEMY_SEPOLIA_API_URL', 'ALCHEMY_GOERLI_API_URL',
+    'ALCHEMY_MAINNET_API_URL', 'METAMASK_1_ADDRESS', 'METAMASK_1_PRIVATE_KEY',
+    'METAMASK_2_ADDRESS', 'METAMASK_2_PRIVATE_KEY', 'ETHERSCAN_KEY'
+];
+
+console.log('Num of variables in .env to check: ', variables.length);
 
 // exit();
 
@@ -115,15 +134,21 @@ exercise = '3b';
 
 
 // Solution 1. forEach.
-variablesToCheck.forEach(v => {
-    // Your code here!
-});
+ variables.forEach(v => {
+    if (!process.env[v]) {
+        console.log(`Missing ${v}, fix your .env file`);
+    }
+ });
 
 // Solution 2. For-loop.
 
-// Your code here!
+for (let index = 0; index < variables.length; index++) {
+    if (process.env[variables[index]] === "") {
+        console.log("variable " + variables[index] + " is not set!")
+    }
+}
 
 
-// exit();
+exit();
 
 

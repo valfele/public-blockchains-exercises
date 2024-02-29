@@ -84,6 +84,9 @@ console.log(primitive);
 // Assign the new string 'I am no longer primitive. I am making progress!'
 // to primitive and print it to console.
 
+primitive = 'I am no longer primitive. I am making progress!'
+console.log(primitive);
+
 // Technical Note! Before I said that primitive types are immutable and not
 // objects. While this is true, in JavaScript primitives are often wrapped in 
 // an object before you interact with them and may have methods. More on this
