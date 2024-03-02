@@ -47,6 +47,7 @@ hello = async () => {
 };
 
 hello();
+console.log('that happens in the meantime')
 
 // Exercise: handling errors in async/await.
 ////////////////////////////////////////////
