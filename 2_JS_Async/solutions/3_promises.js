@@ -92,4 +92,6 @@ promise
     console.log('Is the exercise over?', isSearching ? 'Yes!' : 'No!');
   });
 
+console.log('That is happening in the meantime')
+
   
