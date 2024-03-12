@@ -11,6 +11,7 @@ Ass_*
 4_Hardhat_live
 4_Hardhat_A
 4_Hardhat_B
+4_Hardhat_test
 nft
 3_openzeppelin.js
 Home_Assignments
@@ -19,3 +20,5 @@ Home_Assignments
 cache
 artifacts
 
+package.json
+package-lock.json
