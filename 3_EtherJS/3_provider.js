@@ -372,7 +372,6 @@ const balance = async (ensName = "unima.eth") => {
 };
 
 balance();
-*/
 
 // balance("vitalik.eth");
 

@@ -18,7 +18,9 @@ const path = require('path');
 
 // Require packages.
 
-pathToDotEnv = path.join(__dirname, '..', '..', '.env');
+let pathToDotEnv = path.resolve(process.cwd(), '.env');
+require('dotenv').config({ path: pathToDotEnv }); 
+
 // console.log(pathToDotEnv);
 require("dotenv").config({ path: pathToDotEnv });
 
@@ -26,9 +28,9 @@ const ethers = require("ethers");
 
 const providerKey = process.env.ALCHEMY_KEY;
 
-const goerliUrl = `${process.env.ALCHEMY_GOERLI_API_URL}${providerKey}`;
-// console.log(goerliUrl);
-const goerliProvider = new ethers.JsonRpcProvider(goerliUrl);
+const sepoliaUrl = `${process.env.ALCHEMY_SEPOLIA_API_URL}${providerKey}`;
+console.log(sepoliaUrl);
+const sepoliaProvider = new ethers.JsonRpcProvider(sepoliaUrl);
 
 // Exercise 1. Bonus. Get ERC20 Balance.
 ////////////////////////////////////////
@@ -41,7 +43,7 @@ const goerliProvider = new ethers.JsonRpcProvider(goerliUrl);
 
 // First, we need to know the address of the smart contract. We can use the 
 // LINK contract.
-const linkAddress = '0x326c977e6efc84e512bb9c30f76e30c160ed06fb';
+const linkAddress = '0x779877A7B0D9E8603169DdbD7836e478b4624789';
 
 // At the address, there is only bytecode. So we need to tell Ethers JS, what
 // methods can be invoked. To do so, we pass the Application Binary Interface
@@ -57,10 +59,13 @@ const linkABI = require('./link_abi.json');
 // https://faucets.chain.link/goerli
 
 const link = async () => {
-   
-    // Your code here!
+    const contract = new ethers.Contract(linkAddress, linkABI, sepoliaProvider);
+    const linkBalance = await contract.balanceOf("unima.eth");
+    console.log(ethers.formatEther(linkBalance));
 };
 
 
-// link();
+link();
+
+return; 
 
