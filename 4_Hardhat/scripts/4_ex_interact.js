@@ -28,7 +28,7 @@ console.log("Ethers version:", ethers.version);
 // a. Update with your contract's name and address.
 // Hint: The address is known only after deployment.
 const contractName = "Lock2";
-const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const contractAddress = "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9";
 
 // Let's continue inside the async main function (the recommended Hardhat
 // pattern of execution).
@@ -40,20 +40,28 @@ async function main() {
   // execute: npx hardhat node
   // Hint: ethers.getSigners() returns an array of signers.
 
-  // Your code here.  
+  let signers = await hre.ethers.getSigners();
+  let hhSigner = signers[0];
+  console.log("Signer's address: ", hhSigner.address);  
+
+  // return;
 
   // c. Get the provider.
   // Hint: available under hre.ethers.provider;
 
-  // Your code here.
+  const provider = ethers.provider;
 
   // d. Get your new contract. Hardhat Ethers automatically fetches the ABI from
   // the artifacts, so you don't need to specify it. Use the method
   // ethers.getContractAt(<name>, <address>, <signer>)
   // then print the contract address.
 
-  // const lock =  Your code here.
-  // console.log(contractName + " address", lock.target); 
+  const lock2 = await ethers.getContractAt(contractName, contractAddress, hhSigner)
+  console.log(contractName + " address", lock2.target); 
+
+  // return; 
+
+  // CONTINUE HERE! 
 
   // Exercise 3. Interact with your new Solidity contract (WRITE).
   ////////////////////////////////////////////////////////////////
@@ -71,19 +79,28 @@ async function main() {
   // Hint3: Do you get an error? You should! Check the long error msg for
   // the reason.
 
-  const withdrawAttempt1 = async (lockContract = lock) => {
+// STILL NEED TO TEST THAT!
+
+  const withdrawAttempt1 = async (lockContract = lock2) => {
     
-    // Your code here.
+    let b1 = await provider.getBalance(hhSigner.address);
+    b1 = ethers.formatEther(b1);
 
     console.log('The balance before withdrawing is ', b1);
     console.log("Withdrawing from Lock");
-    
-    // Your code here.
+    await lockContract.withdraw();
+
+    let b2 = await provider.getBalance(hhSigner.address);
+    b2 = ethers.formatEther(b2);
 
     console.log('The balance after withdrawing is ', b2);
   };
 
-  // await withdrawAttempt1();
+
+
+// await withdrawAttempt1();
+
+// return; 
   
   // Exercise 3. Remove the check for unlock date (WRITE).
   ////////////////////////////////////////////////////////////////////
@@ -96,14 +113,21 @@ async function main() {
   
   const withdrawAgain = async() => {
     
-    // const newContractAddress = Write the new address;
+    const newContractAddress = "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707";
 
-    // const newLock = Your code here.
+      // Wrapped Ethers.
+        const newLock = await ethers.getContractAt(contractName,
+          newContractAddress,
+          hhSigner);
+
+      // Can also print:
+      // console.log(newLock.target);
+      // await readContract(newLock);  
 
     await withdrawAttempt1(newLock);
   };
   
-  // await withdrawAgain();
+   await withdrawAgain();
   
 
 
